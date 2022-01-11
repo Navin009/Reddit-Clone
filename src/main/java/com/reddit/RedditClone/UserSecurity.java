@@ -1,17 +1,15 @@
 package com.reddit.RedditClone;
 
-import com.reddit.RedditClone.model.Comment;
+import java.util.Optional;
+
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.repository.CommentRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
-import java.util.Optional;
 
 @Component("userSecurity")
 public class UserSecurity {

@@ -1,23 +1,24 @@
 package com.reddit.RedditClone.controller;
 
+import java.text.ParseException;
+
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.model.Vote;
-import com.reddit.RedditClone.repository.UserRepository;
 import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.UserService;
 import com.reddit.RedditClone.service.VoteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VoteController {

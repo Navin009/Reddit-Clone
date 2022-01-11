@@ -1,22 +1,23 @@
 package com.reddit.RedditClone.controller;
 
+import java.util.List;
+
 import com.reddit.RedditClone.model.Comment;
-import com.reddit.RedditClone.model.Post;
-import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.repository.CommentRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.service.CommentService;
 import com.reddit.RedditClone.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CommentController {

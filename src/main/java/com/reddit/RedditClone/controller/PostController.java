@@ -1,17 +1,36 @@
 package com.reddit.RedditClone.controller;
 
-import com.reddit.RedditClone.model.*;
-import com.reddit.RedditClone.service.*;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+
+import com.reddit.RedditClone.model.Comment;
+import com.reddit.RedditClone.model.Post;
+import com.reddit.RedditClone.model.Subreddit;
+import com.reddit.RedditClone.model.User;
+import com.reddit.RedditClone.model.Vote;
+import com.reddit.RedditClone.service.CommentService;
+import com.reddit.RedditClone.service.PostService;
+import com.reddit.RedditClone.service.SubredditService;
+import com.reddit.RedditClone.service.SubscriptionService;
+import com.reddit.RedditClone.service.UserService;
+import com.reddit.RedditClone.service.VoteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.text.ParseException;
-import java.util.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PostController {
