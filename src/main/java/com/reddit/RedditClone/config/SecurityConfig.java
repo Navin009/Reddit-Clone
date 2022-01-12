@@ -46,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic();
         http.authorizeRequests()
                 .antMatchers("/","/register","/saveUser").permitAll()
-//                .antMatchers("").hasAnyAuthority("ADMIN", "AUTHOR")
-//                .antMatchers("").hasAnyAuthority("ADMIN", "AUTHOR")
                 .antMatchers("/delete/{postId}")
                 .access("@userSecurity.hasUserId(authentication, #postId)")
                 .antMatchers("/update/{postId}")

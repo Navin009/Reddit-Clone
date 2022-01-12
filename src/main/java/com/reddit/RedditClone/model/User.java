@@ -1,18 +1,30 @@
 package com.reddit.RedditClone.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -35,15 +47,10 @@ public class User {
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-//    @JoinTable(name = "user_subreddits",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
     private Set<Subreddit> subreddits = new HashSet<>();
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_subscription", joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "subreddit_id")})
     private Set<Subreddit> subredditSubscriptions = new HashSet<>();
 
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")

@@ -1,14 +1,33 @@
 package com.reddit.RedditClone.model;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "posts")
