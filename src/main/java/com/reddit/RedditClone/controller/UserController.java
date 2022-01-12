@@ -1,9 +1,14 @@
 package com.reddit.RedditClone.controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
 import com.reddit.RedditClone.service.PostService;
 import com.reddit.RedditClone.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,8 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -40,8 +44,10 @@ public class UserController {
     }
 
     @PostMapping("/saveUser")
-    public String registerUser(@ModelAttribute("user") User user, Model model){
+    public String registerUser(@ModelAttribute("user") User user,@RequestParam("dob") String dob, Model model){
         try {
+            Timestamp timestamp = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(dob).getTime());
+            user.setCreatedAt(timestamp);
             User newUser = userService.registerUser(user);
             model.addAttribute("user", newUser);
             model.addAttribute("registerMessage", "success");
