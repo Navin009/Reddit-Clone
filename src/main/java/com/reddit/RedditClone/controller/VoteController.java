@@ -16,8 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -38,31 +36,15 @@ public class VoteController {
     @Autowired
     private PostController postController;
 
-    @Deprecated
-    @RequestMapping("/saveVote")
-    public String saveVote(@ModelAttribute("vote") Vote vote, Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
-        }
-        String email = authentication.getName();
-        User user = userService.findUserByEmail(email);
-
-        voteService.saveVote(vote);
-
-        model.addAttribute("userId", user.getId());
-        return "sub_reddit";
-    }
-
     @GetMapping("/vote")
     public String changeVote(@RequestParam("postId") Long postId,
-                             @RequestParam(required = false, name = "upVote", defaultValue = "false") boolean upVote,
-                             @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
-                             @RequestParam(required = false, name = "isHomePage", defaultValue = "false") boolean isHomePage,
-                             @RequestParam(required = false, name = "isProfile", defaultValue = "false") boolean isProfile,
-                             @RequestParam(required = false, name = "isSearch", defaultValue = "false") boolean isSearch,
-                             @RequestParam(required = false, name = "keyword", defaultValue = "") String keyword,
-                             Model model) throws ParseException {
+            @RequestParam(required = false, name = "upVote", defaultValue = "false") boolean upVote,
+            @RequestParam(required = false, name = "downVote", defaultValue = "false") boolean downVote,
+            @RequestParam(required = false, name = "isHomePage", defaultValue = "false") boolean isHomePage,
+            @RequestParam(required = false, name = "isProfile", defaultValue = "false") boolean isProfile,
+            @RequestParam(required = false, name = "isSearch", defaultValue = "false") boolean isSearch,
+            @RequestParam(required = false, name = "keyword", defaultValue = "") String keyword,
+            Model model) throws ParseException {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
@@ -70,7 +52,6 @@ public class VoteController {
             model.addAttribute("errMsg", errMsg);
             return "error";
         }
-        System.out.println("change Vote controller");
         String email = authentication.getName();
         User user = userService.findUserByEmail(email);
 
@@ -84,15 +65,15 @@ public class VoteController {
 
         Post post = postService.getPostById(postId);
 
-        if(isHomePage){
+        if (isHomePage) {
             return subredditController.getRedditById(post.getSubredditId(), model);
         }
 
-        if (isProfile){
+        if (isProfile) {
             return postController.viewProfile(model);
         }
 
-        if(isSearch){
+        if (isSearch) {
             return postController.searchPosts(keyword, model);
         }
 

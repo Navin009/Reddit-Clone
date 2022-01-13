@@ -1,18 +1,22 @@
 package com.reddit.RedditClone.service;
 
-import com.amazonaws.services.dynamodbv2.xspec.L;
-import com.reddit.RedditClone.model.Vote;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import com.reddit.RedditClone.model.Post;
 import com.reddit.RedditClone.model.User;
+import com.reddit.RedditClone.model.Vote;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.UserRepository;
 import com.reddit.RedditClone.repository.VoteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class VoteServiceImpl implements VoteService {
@@ -67,7 +71,7 @@ public class VoteServiceImpl implements VoteService {
                 System.out.println("reversing the vote");
                 post.setUpVoteCount(post.getUpVoteCount() + 1);
                 post.setDownVoteCount(post.getDownVoteCount() - 1);
-                post.setVoteCount(post.getVoteCount() + 2);
+                post.setVoteCount(post.getVoteCount() + 1);
 
                 voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
                 voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
@@ -78,7 +82,7 @@ public class VoteServiceImpl implements VoteService {
                 System.out.println("reversing the vote");
                 post.setUpVoteCount(post.getUpVoteCount() - 1);
                 post.setDownVoteCount(post.getDownVoteCount() + 1);
-                post.setVoteCount(post.getVoteCount() - 2);
+                post.setVoteCount(post.getVoteCount() - 1);
 
                 voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
                 voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
