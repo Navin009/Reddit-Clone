@@ -32,12 +32,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private Timestamp createdAt;
@@ -45,24 +46,22 @@ public class User {
     @Column(columnDefinition = "integer default 0")
     private Long karma;
 
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Subreddit> subreddits = new HashSet<>();
-
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Subreddit> subredditSubscriptions = new HashSet<>();
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @OrderBy("createdDate, id")
     private SortedSet<Comment> comments = new TreeSet<>();
 
-    public User(Long id, String username){
+    public User(Long id, String username) {
         this.id = id;
         this.username = username;
     }
 
-    public User(String username){
+    public User(String username) {
         this.username = username;
     }
 }

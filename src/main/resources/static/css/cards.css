@@ -1,0 +1,82 @@
+.about-community {
+	height: max-content;
+	overflow: hidden;
+	border-radius: 3px;
+	margin-bottom: 5vh;
+	width: 22vw;
+}
+
+.community-header {
+	border: 1px solid #e6e6e6;
+	height: 7vh;
+	display: flex;
+	align-items: center;
+	padding: 1vh;
+	background-color: #e9e9e9;
+	border: none;
+}
+
+.community-body {
+	background: white;
+	font-family: "Courier New", Courier, monospace;
+	padding: 2vh;
+	justify-content: justify;
+}
+
+.community-body p {
+	font-size: 17px;
+}
+
+.community-created {
+	font-size: 2.2vh;
+	font-weight: bolder;
+}
+
+.subreddit-box {
+	height: fit-content;
+	border: none;
+	overflow: hidden;
+	border-radius: 3px;
+	width: 22vw;
+}
+
+.subreddit-header {
+	height: 10vh;
+	margin: -2vh;
+	padding: 2vh;
+	background-image: url("https://www.redditstatic.com/desktop2x/img/leaderboard/banner-background.png");
+	background-size: 150%;
+	text-align: center;
+	color: #fff;
+	font-weight: bolder;
+	font-size: x-large;
+	font-family: sans-serif;
+}
+.subreddit-body {
+	margin-top: 2vh;
+}
+.subreddit-body-row {
+	background-color: white;
+	height: 7vh;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	grid-auto-flow: column;
+	align-items: center;
+	padding: 0 2vw;
+	grid-row-start: 1;
+}
+
+.subreddit-body-row:hover {
+	background-color: #eeeeee;
+}
+.subreddit-body-row:active {
+	transform: scale(0.98);
+}
+
+.subreddit-body-row a {
+	text-decoration: none;
+	color: black;
+	font-family: "Courier New";
+	font-size: 17px;
+	font-weight: bolder;
+}

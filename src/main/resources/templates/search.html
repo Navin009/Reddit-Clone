@@ -1,206 +1,226 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th=“http://www.thymeleaf.org”>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search</title>
   <link rel="icon" type="image/png" href="./../static/images/reddit.png" th:href="@{/images/reddit.png}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css" integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.0/font/bootstrap-icons.min.css"
+    integrity="sha512-7w04XesEFaoeeKX0oxkwayDboZB/+AKNF5IUE50fCUDUywLvDN4gv2513TLQS+RDenAeHEK3O40jZZVrkpnWWw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
-        integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/cards.css">
   <style>
-    .profile-nav{
+    .profile-nav {
       text-align: center;
       background: #fb6d19;
     }
 
-    .profile-nav li{
-        display: inline-block;
-        list-style: none;
+    .profile-nav li {
+      display: inline-block;
+      list-style: none;
     }
-    .profile-nav li a{
-        color: black;
-        text-decoration:none;
-        margin:10px;
-    }
-.subreddit-div li{
-}
-.subreddit-div li a{
-    display: block;
-     margin:10px;
-     text-decoration:none;
-}
-.sorting, .subreddit, .posts-div, subreddits-div, .single-post{
-    background:white;
-    margin:10px;
-    padding:10px 20px;
-    border-radius: 5px;
 
-}
-.votes-div{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-.card {
-  border: none;
-  background: #fff;
-}
-button {
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  color: black;
-}
-.main{
-background-color:#dae0e6;
-padding:30px;
-}
-</style>
+    .profile-nav li a {
+      color: black;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    .subreddit-div li {}
+
+    .subreddit-div li a {
+      display: block;
+      margin: 10px;
+      text-decoration: none;
+    }
+
+    .sorting,
+    .subreddit,
+    .posts-div,
+    subreddits-div,
+    .single-post {
+      background: white;
+      margin: 10px;
+      padding: 10px 20px;
+      border-radius: 5px;
+
+    }
+
+    .votes-div {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .card {
+      border: none;
+      background: #fff;
+    }
+
+    button {
+      background-color: white;
+      border: none;
+      border-radius: 50%;
+      color: black;
+    }
+
+    .main {
+      background-color: #dae0e6;
+      padding: 30px;
+    }
+  </style>
 </head>
+
 <body>
-<div th:replace="fragments/header :: header"></div>
-<div class="main">
-  <div class="row">
-    <div class="col-lg-8" >
-      <!-- Post content-->
-      <article>
-        <div style="mb-2">
-          <p class="fw-bolder mb-1"><b>COMMUNITIES</b></p>
-          <hr>
-          <div class="row posts-div">
-            <th:block th:each="sSubreddit : ${searchSubreddits}">
-              <div class="">
-                <a th:href="'/reddit/'+${sSubreddit.id}" style="text-decoration:none; color:black">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title" th:text="${sSubreddit.name}" th:field="${sSubreddit.name}"></h5>
-                      <div class="text-muted fst-italic mb-2">[[${#dates.format(sSubreddit.createdAt, 'MMM dd, yyyy h:mm a')}]]</div>
-                      <p class="card-text" th:text="${sSubreddit.description}" th:field="${sSubreddit.description}" ></p>
+  <div th:replace="fragments/header :: header"></div>
+  <div class="main">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- Post content-->
+        <article>
+          <div class="mb-2">
+            <p class="fw-bolder mb-1"><b>COMMUNITIES</b></p>
+            <hr>
+            <div class="row posts-div">
+              <th:block th:each="sSubreddit : ${searchSubreddits}">
+                <div class="">
+                  <a th:href="'/reddit/'+${sSubreddit.id}" style="text-decoration:none; color:black">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title" th:text="${sSubreddit.name}" th:field="${sSubreddit.name}"></h5>
+                        <div class="text-muted fst-italic mb-2">[[${#dates.format(sSubreddit.createdAt, 'MMM dd, yyyy
+                          h:mm a')}]]</div>
+                        <p class="card-text" th:text="${sSubreddit.description}" th:field="${sSubreddit.description}">
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              </div>
-            </th:block>
+                  </a>
+                </div>
+              </th:block>
+            </div>
           </div>
-        </div>
-        <!-- Content-->
-        <div style="mb-2">
-          <p class="fw-bolder mb-1"><b>POSTS</b></p>
-          <hr>
-          <div class="row posts-div">
-            <th:block th:each="post : ${posts}">
-              <div class="col-md-1 votes-div">
-                <form action="/vote" method="get" >
-                  <input type="hidden" name="postId" th:value="${post.id}" />
-                  <input type="hidden" name="upVote" value="true" />
-                  <input type="hidden" name="isSearch" th:value="true" />
-                  <input type="hidden" name="keyword" th:value="${keyword}" />
-                  <th:block th:if="${!userExist
+          <!-- Content-->
+          <div class="mb-2">
+            <p class="fw-bolder mb-1"><b>POSTS</b></p>
+            <hr>
+            <div class="row posts-div">
+              <th:block th:each="post : ${posts}">
+                <div class="col-md-1 votes-div">
+                  <form action="/vote" method="get">
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <input type="hidden" name="upVote" value="true" />
+                    <input type="hidden" name="isSearch" th:value="true" />
+                    <input type="hidden" name="keyword" th:value="${keyword}" />
+                    <th:block th:if="${!userExist
                                     or !votes.containsKey(post.id)
                                     or !votes.get(post.id).containsKey(user.id)
-                                    or !votes.get(post.id).get(user.id).upVoted }" >
-                    <button type="submit">
-                      <i class="bi bi-caret-up" style='font-size:24px'></i>
-                    </button>
-                  </th:block>
-                </form>
-                <form action="/vote" method="get" >
-                  <input type="hidden" name="postId" th:value="${post.id}" />
-                  <input type="hidden" name="upVote" value="false" />
-                  <input type="hidden" name="isSearch" th:value="true" />
-                  <input type="hidden" name="keyword" th:value="${keyword}" />
-                  <th:block  th:if="${userExist
+                                    or !votes.get(post.id).get(user.id).upVoted }">
+                      <button type="submit">
+                        <i class="bi bi-caret-up" style="font-size:24px;"></i>
+                      </button>
+                    </th:block>
+                  </form>
+                  <form action="/vote" method="get">
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <input type="hidden" name="upVote" value="false" />
+                    <input type="hidden" name="isSearch" th:value="true" />
+                    <input type="hidden" name="keyword" th:value="${keyword}" />
+                    <th:block th:if="${userExist
                                       and votes.containsKey(post.id)}
                                       and ${votes.get(post.id).containsKey(user.id)}
                                       and ${votes.get(post.id).get(user.id).upVoted} ">
-                    <!--                                         and ${votes.get(post.id).userId == #authentication.getPrincipal().getUserId()}-->
-                    <button type="submit">
-                      <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
-                    </button>
-                  </th:block>
-                </form>
-                <span class="" style="color: rgb(26, 26, 27);">&nbsp&nbsp&nbsp[[${post.voteCount}]]</span>
-                <form action="/vote" method="get" >
-                  <input type="hidden" name="postId" th:value="${post.id}" />
-                  <input type="hidden" name="downVote" value="true" />
-                  <input type="hidden" name="isSearch" th:value="true" />
-                  <input type="hidden" name="keyword" th:value="${keyword}" />
-                  <th:block th:if = "${!userExist
+                      <!--                                         and ${votes.get(post.id).userId == #authentication.getPrincipal().getUserId()}-->
+                      <button type="submit">
+                        <i class="bi bi-caret-up-fill" style='font-size:24px'></i>
+                      </button>
+                    </th:block>
+                  </form>
+                  <span class="" style="color: rgb(26, 26, 27);">&nbsp&nbsp&nbsp[[${post.voteCount}]]</span>
+                  <form action="/vote" method="get">
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <input type="hidden" name="downVote" value="true" />
+                    <input type="hidden" name="isSearch" th:value="true" />
+                    <input type="hidden" name="keyword" th:value="${keyword}" />
+                    <th:block th:if="${!userExist
                                                         or !votes.containsKey(post.id)}
                                                         or ${!votes.get(post.id).containsKey(user.id)}
                                                         or ${!votes.get(post.id).get(user.id).downVoted}">
-                    <button type="submit">
-                      <i class="bi bi-caret-down" style='font-size:24px'></i>
-                    </button>
-                  </th:block>
-                </form>
-                <form action="/vote" method="get" >
-                  <input type="hidden" name="postId" th:value="${post.id}" />
-                  <input type="hidden" name="downVote" value="false" />
-                  <input type="hidden" name="isSearch" th:value="true" />
-                  <input type="hidden" name="keyword" th:value="${keyword}" />
-                  <th:block  th:if="${userExist
+                      <button type="submit">
+                        <i class="bi bi-caret-down" style='font-size:24px'></i>
+                      </button>
+                    </th:block>
+                  </form>
+                  <form action="/vote" method="get">
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <input type="hidden" name="downVote" value="false" />
+                    <input type="hidden" name="isSearch" th:value="true" />
+                    <input type="hidden" name="keyword" th:value="${keyword}" />
+                    <th:block th:if="${userExist
                                       and votes.containsKey(post.id)}
                                       and ${votes.get(post.id).containsKey(user.id)}
-                                      and  ${votes.get(post.id).get(user.id).downVoted}" >
-                    <button type="submit">
-                      <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
-                    </button>
-                  </th:block>
-                </form>
-              </div>
-              <div class="col-md-11">
-                <a th:href="'/viewPost/'+${post.id}" style="text-decoration:none; color:black">
-                  <div class="card">
-                    <div class="card-body">
-                      <h6 class="card-title" th:text="${post.title}" th:field="${post.title}"></h6>
-                      <p class="text-muted fst-italic mb-2">[[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]</p>
-                      <p class="card-text" th:text="${#strings.abbreviate(post.content,100)}"></p>
+                                      and  ${votes.get(post.id).get(user.id).downVoted}">
+                      <button type="submit">
+                        <i class="bi bi-caret-down-fill" style='font-size:24px'></i>
+                      </button>
+                    </th:block>
+                  </form>
+                </div>
+                <div class="col-md-11">
+                  <a th:href="'/viewPost/'+${post.id}" style="text-decoration:none; color:black">
+                    <div class="card">
+                      <div class="card-body">
+                        <h6 class="card-title" th:text="${post.title}" th:field="${post.title}"></h6>
+                        <p class="text-muted fst-italic mb-2">[[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm
+                          a')}]]</p>
+                        <p class="card-text" th:text="${#strings.abbreviate(post.content,100)}"></p>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </div>
+                <hr>
+              </th:block>
+              <div th:if="postsLength == 0">
+                No post is available
               </div>
-              <hr>
-            </th:block>
-            <div th:if="postsLength == 0">
-              No post is available
+            </div>
+          </div>
+
+        </article>
+      </div>
+      <!-- Side widgets-->
+      <div class="col-lg-4">
+        <!-- Search widget-->
+        <div class="card mb-4">
+          <div class="card-header">&nbsp;</div>
+          <div class="card-body">
+            <div class="">
+              <a class="nav-link active " aria-current="page" href="/createSubreddit">Create Community</a>
+            </div>
+          </div>
+        </div>
+        <!-- Subreddits List-->
+        <div class="subreddit-box">
+          <div class="subreddit-header">Subreddits</div>
+          <div class="subreddit-body">
+            <div th:each="subreddit : ${subreddits}" class="subreddit-body-row">
+              <i class="bi bi-people-fill fa-2x"></i>
+              <a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a>
             </div>
           </div>
         </div>
 
-      </article>
+      </div>
     </div>
-    <!-- Side widgets-->
-    <div class="col-lg-4">
-      <!-- Search widget-->
-      <div class="card mb-4">
-        <div class="card-header">&nbsp;</div>
-        <div class="card-body">
-          <div class="">
-            <a class="nav-link active " aria-current="page" href="/createSubreddit">Create Community</a>
-          </div>
-        </div>
-      </div>
-      <!-- Subreddits List-->
-      <div class="card mb-4">
-        <div class="card-header">Subreddits</div>
-        <div class="card-body">
-          <div class="row subreddit-div px-5">
-            <ul class="mb-0">
-              <li th:each="subreddit : ${subreddits}"><a th:href="'/reddit/'+${subreddit.id}" th:text="${subreddit.name}"></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
-    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </div>
-
-  <!-- Bootstrap core JS-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</div>
 </body>
+
 </html>
