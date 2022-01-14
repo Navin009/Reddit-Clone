@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap");
+
 .about-community {
 	height: max-content;
 	overflow: hidden;
@@ -79,4 +81,41 @@
 	font-family: "Courier New";
 	font-size: 17px;
 	font-weight: bolder;
+}
+
+.subreddit-community {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	height: 30vh;
+	width: 100%;
+	background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+.sub-reddit-comm-body {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: space-evenly;
+}
+
+.sub-reddit-comm-title {
+	font-family: "Luxurious Roman";
+	font-size: 30px;
+}
+
+.sub-reddit-comm-date {
+	font-family: "Luxurious Roman";
+	font-size: 15px;
+}
+.sub-reddit-comm-karma {
+	font-weight: 600;
+	font-size: 20px;
+	margin-bottom: 2vh;
+}
+.btn-comm-join {
+	border-radius: 99px;
+	padding: 0 45px;
+	font-family: "Luxurious Roman";
+	font-size: 18px;
 }

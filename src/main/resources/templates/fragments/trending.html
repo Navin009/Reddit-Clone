@@ -6,44 +6,15 @@
 </head>
 
 <body>
-    <div th:fragment="trending" class="trending">
+    <div th:fragment="trending" class="trending" th:if="${subReddit == null}">
         <span class="trending-title">Trending Posts</span>
-        <div class="d-flex">
-            <div class="trending-post-box" id="trending-1">
-                <div class="trending-box-title">
-                    this is post title
-                </div>
-                <div class="trending-post-community">
-                    r/community and more
-                </div>
+        <div class="trending-post-container">
+            <div class="trending-post-box" th:each="trendingPost : ${trendingPosts}">
+                <div class="trending-box-title" th:text="${trendingPost.title}"></div>
+                <a class="trending-box-link" th:text="${trendingPost.link}" th:href="${trendingPost.link}" target="_blank"></a>
+                <div class="trending-box-date" th:text="${trendingPost.updatedAt}"></div>
             </div>
-            <div class="trending-post-box" id="trending-1">
-                <div class="trending-box-title">
-                    this is post title
-                </div>
-                <div class="trending-post-community">
-                    r/community and more
-                </div>
-            </div>
-            <div class="trending-post-box" id="trending-1">
-                <div class="trending-box-title">
-                    this is post title
-                </div>
-                <div class="trending-post-community">
-                    r/community and more
-                </div>
-            </div>
-            <div class="trending-post-box" id="trending-1">
-                <div class="trending-box-title">
-                    this is post title
-                </div>
-                <div class="trending-post-community">
-                    r/community and more
-                </div>
-            </div>
-          
         </div>
-
     </div>
 </body>
 

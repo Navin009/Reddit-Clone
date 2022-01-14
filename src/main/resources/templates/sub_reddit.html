@@ -22,6 +22,34 @@
 <body>
     <div th:replace="fragments/header :: header"></div>
     <div sec:authorize="isAnonymous()" th:replace="fragments/trending :: trending"></div>
+    <div class="subreddit-community" th:if="${subReddit != null}">
+        <div class="sub-reddit-comm-body">
+            <span class="sub-reddit-comm-title" th:inline="text">
+                Subreddit Name : [[${subReddit.name}]]
+                <div class="sub-reddit-comm-karma">
+                    Karma
+                    <span th:text="${karma}"></span>
+                </div>
+                <div class="sub-reddit-comm-date">
+                    [[${#dates.format(subReddit.createdAt, 'MMM dd, yyyy h:mm a')}]]
+                </div>
+            </span>
+            <div>
+                <th:block th:if="${isSubscribed}">
+                    <form th:action="@{/unsubscribe}" method="get">
+                        <input type="hidden" th:value="${subReddit.id}" name="id">
+                        <button class="btn btn-primary btn-comm-join" type="submit">Joined</button>
+                    </form>
+                </th:block>
+                <th:block th:if="${!isSubscribed}">
+                    <form th:action="@{/subscribe}" method="get">
+                        <input type="hidden" th:value="${subReddit.id}" name="id">
+                        <button class="btn btn-outline-primary btn-comm-join" type="submit">Join</button>
+                    </form>
+                </th:block>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <article>
             <div class="new-post" sec:authorize="isAuthenticated()">
@@ -36,39 +64,7 @@
                 </button>
             </div>
 
-            <div class="row subreddit" th:if="${subReddit != null}">
-                <header class="mb-4">
-                    <div class="row">
-                        <div class="col-md-4 ">
-                            <h4 class="fw-bolder mb-1" th:text="${subReddit.name}">Subreddit name</h4>
-                            <div class="text-muted fst-italic mb-2">
-                                [[${#dates.format(subReddit.createdAt, 'MMM dd, yyyy h:mm a')}]]
-                            </div>
-                            <button type="button" class="btn btn-dark shadow" disabled>
-                                Karma <span class="badge badge-pill badge-light" th:text="${karma}">9</span>
-                            </button>
-                        </div>
 
-                        <div class="col-lg-8">
-                            <th:block th:if="${isSubscribed}">
-                                <form th:action="@{/unsubscribe}" method="get">
-                                    <input type="hidden" th:value="${subReddit.id}" name="id">
-                                    <button class="btn btn-outline-primary" type="submit"
-                                        style="border-radius: 20px;padding:5px 20px">Joined</button>
-                                </form>
-                            </th:block>
-                            <th:block th:if="${!isSubscribed}">
-                                <form th:action="@{/subscribe}" method="get">
-                                    <input type="hidden" th:value="${subReddit.id}" name="id">
-                                    <button class="btn btn-outline-primary" type="submit"
-                                        style="border-radius: 20px;padding:5px 20px">Join</button>
-                                </form>
-                            </th:block>
-
-                        </div>
-                    </div>
-                </header>
-            </div>
             <p class="fw-bolder mb-1 mx-2"><b>Posts</b></p>
             <div class="sorting">
                 <th:block th:if="${subReddit != null}">
@@ -147,8 +143,8 @@
                         <div class="post-title" th:text="${post.title}" th:field="${post.title}"></div>
                         <div class="post-body">
                             <p class="post-content" th:text="${#strings.abbreviate(post.content,100)}"></p>
-                            <p class="text-muted fst-italic mb-2">
-                                [[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]
+                            <p class="post-date">
+                                Posted At : [[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]
                             </p>
                         </div>
                     </div>

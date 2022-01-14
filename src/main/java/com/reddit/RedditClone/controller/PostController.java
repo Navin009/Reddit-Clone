@@ -89,6 +89,7 @@ public class PostController {
         model.addAttribute("userExist", true);
 
         List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
+        // Make it workable
         List<Subreddit> subreddits = subredditService.searchByUser(user.getId());
         List<Comment> comments = commentService.findByUserId(user.getId());
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
@@ -149,21 +150,22 @@ public class PostController {
 
     @GetMapping(value = { "/", "/post" })
     public String getAllPosts(Model model) {
-        List<Post> posts = null;
         List<Subreddit> selectedSubreddits = subredditService.findAllPublicAndRestrictedSubreddit();
-        posts = postService.findPostsBySubreddits(selectedSubreddits);
-
+        List<Post> posts = postService.findPostsBySubreddits(selectedSubreddits);
         List<Subreddit> subreddits = subredditService.findAllSubreddits();
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
-
+        
         model.addAttribute("posts", posts);
         model.addAttribute("subreddits", subreddits);
         model.addAttribute("votes", votes);
-
+        
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            List<Post> trendingPosts = postService.findAllNewPosts();
+            model.addAttribute("trendingPosts", trendingPosts);
             model.addAttribute("userExist", false);
         } else {
+            
             model.addAttribute("userExist", true);
             String email = authentication.getName();
             User user = userService.findUserByEmail(email);
@@ -280,7 +282,8 @@ public class PostController {
         List<Post> posts = postService.findAllNewPosts();
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
         System.out.println("Posts = " + posts);
-
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         model.addAttribute("votes", votes);
         return "redirect:/popular/";
@@ -381,7 +384,8 @@ public class PostController {
     @RequestMapping("/new")
     public String getAllNewPosts(Model model) {
         List<Post> posts = postService.findAllNewPosts();
-
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
@@ -389,7 +393,8 @@ public class PostController {
     @GetMapping("/top/t=day")
     public String todayAllPosts(Model model) {
         List<Post> posts = postService.getLast24HourPosts();
-
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
@@ -397,6 +402,8 @@ public class PostController {
     @GetMapping("/top/t=week")
     public String currentWeekAllPosts(Model model) {
         List<Post> posts = postService.getLastWeekPosts();
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
@@ -404,6 +411,8 @@ public class PostController {
     @GetMapping("/top/t=month")
     public String currentMonthAllPosts(Model model) {
         List<Post> posts = postService.getLastMonthPosts();
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }
@@ -411,6 +420,8 @@ public class PostController {
     @GetMapping("/top/t=year")
     public String currentYearAllPosts(Model model) {
         List<Post> posts = postService.getLastYearPosts();
+        List<Post> trendingPosts = postService.findAllNewPosts();
+        model.addAttribute("trendingPosts", trendingPosts);
         model.addAttribute("posts", posts);
         return postService.redirectToSubredditPage(posts, model);
     }

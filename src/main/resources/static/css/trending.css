@@ -1,20 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap");
+
 .trending {
 	margin: 3vh 20vh;
 	margin-bottom: -8vh;
 }
+.trending-post-container {
+	display: flex;
+}
+
+.trending-post-box {
+	border: 1px solid #ccc;
+	background-size: cover;
+	background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+	height: 30vh;
+	width: 35vh;
+	margin: 2vh;
+	border-radius: 5px;
+	padding: 2vh;
+	display: grid;
+	grid-auto-rows: 6fr 1fr 1fr;
+}
 
 .trending-title {
+	font-family: sans-serif;
 	font-size: 2.5vh;
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
 }
 
-.trending-post-box {
-	border: 1px solid #ccc;
-	height: 30vh;
-	width: 35vh;
-	margin: 2vh;
-	border-radius: 5px;
-	padding: 2vh;
+.trending-box-title {
+	font-family: "Luxurious Roman";
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	width: 30vh;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 14vh;
+}
+.trending-box-date {
+	width: inherit;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: "Luxurious Roman";
+	font-size: 13px;
+}
+
+.trending-box-link {
+	height: 6vh;
+	width: 30vh;
+	/* white-space: nowrap; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: "Luxurious Roman";
+	font-size: 15px;
 }

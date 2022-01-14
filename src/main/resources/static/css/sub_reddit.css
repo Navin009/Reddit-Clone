@@ -132,16 +132,25 @@ aside {
 	width: 100%;
 	background: white;
 	padding: 2vh;
+	position: relative;
 }
 
 .post-title {
 	font-size: 30px;
-	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-family: Georgia, "Times New Roman", Times, serif;
 	font-weight: bold;
 	margin-bottom: 1vh;
 }
 
-.post-content{
-	font-family: 'Courier New', Courier, monospace;
+.post-content {
+	font-family: "Courier New", Courier, monospace;
 	white-space: pre-wrap;
+}
+
+.post-date {
+	position: absolute;
+	bottom: 0;
+	right: 1vh;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 13px;
 }

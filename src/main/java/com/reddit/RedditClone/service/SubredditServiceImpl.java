@@ -1,18 +1,18 @@
 package com.reddit.RedditClone.service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import com.reddit.RedditClone.model.CommunityType;
 import com.reddit.RedditClone.model.Subreddit;
 import com.reddit.RedditClone.repository.CommunityTypeRepository;
 import com.reddit.RedditClone.repository.PostRepository;
 import com.reddit.RedditClone.repository.SubredditRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SubredditServiceImpl implements SubredditService{
