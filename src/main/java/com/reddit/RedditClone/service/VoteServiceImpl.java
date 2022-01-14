@@ -27,7 +27,7 @@ public class VoteServiceImpl implements VoteService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private  UserService userService;
+    private UserService userService;
 
     @Override
     public void saveVote(Vote vote) {
@@ -37,12 +37,11 @@ public class VoteServiceImpl implements VoteService {
         String email = authentication.getName();
         user = userService.findUserByEmail(email);
         Optional<User> optionalUser = userRepository.findById(vote.getUserId());
-        System.out.println("Saving vote");
 
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             user = optionalUser.get();
         }
-        if(user == null){
+        if (user == null) {
             System.out.println("User not found!!");
             return;
         }
@@ -50,71 +49,63 @@ public class VoteServiceImpl implements VoteService {
         vote.setUserId(user.getId());
         Vote voteByPostIdAndUserId = voteRepository.findByPostIdAndUserId(post.getId(), user.getId());
 
-        //if user has already contributed but resetting the contribution.
         if (voteByPostIdAndUserId != null) {
-            //resetting the contribution
-            if (!vote.isUpVoted() && !vote.isDownVoted()) {
-                System.out.println("resetting the contribution");
-                if (voteByPostIdAndUserId.isUpVoted()) {
-                    post.setUpVoteCount(post.getUpVoteCount() - 1);
-                    post.setVoteCount(post.getVoteCount() - 1);
-                }
+            if (vote.isUpVoted()) {
                 if (voteByPostIdAndUserId.isDownVoted()) {
                     post.setDownVoteCount(post.getDownVoteCount() - 1);
-                    post.setVoteCount(post.getVoteCount() + 1);
-                }
-//                vote.setContributed(false);
-                voteRepository.delete(voteByPostIdAndUserId);
-            }//reversing the contribution if already contributed
-            else if (vote.isUpVoted() && voteByPostIdAndUserId.isDownVoted()) {
-                //reversing downvote to upvote
-                System.out.println("reversing the vote");
-                post.setUpVoteCount(post.getUpVoteCount() + 1);
-                post.setDownVoteCount(post.getDownVoteCount() - 1);
-                post.setVoteCount(post.getVoteCount() + 1);
-
-                voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
-                voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
-
-                voteRepository.save(voteByPostIdAndUserId);
-            } else if (vote.isDownVoted() && voteByPostIdAndUserId.isUpVoted()) {
-                //reversing upvote to downvote
-                System.out.println("reversing the vote");
-                post.setUpVoteCount(post.getUpVoteCount() - 1);
-                post.setDownVoteCount(post.getDownVoteCount() + 1);
-                post.setVoteCount(post.getVoteCount() - 1);
-
-                voteByPostIdAndUserId.setDownVoted(!voteByPostIdAndUserId.isDownVoted());
-                voteByPostIdAndUserId.setUpVoted(!voteByPostIdAndUserId.isUpVoted());
-
-                voteRepository.save(voteByPostIdAndUserId);
-            }
-        }//contributing first time
-            else {
-                System.out.println("Contributing First time");
-                vote.setContributed(true);
-                if (vote.isUpVoted()) {
                     post.setUpVoteCount(post.getUpVoteCount() + 1);
                     post.setVoteCount(post.getVoteCount() + 1);
-                } else if (vote.isDownVoted()) {
-                    post.setVoteCount(post.getVoteCount() - 1);
-                    post.setDownVoteCount(post.getDownVoteCount() + 1);
+                    voteByPostIdAndUserId.setUpVoted(false);
+                    voteByPostIdAndUserId.setDownVoted(false);
+                } else if (!voteByPostIdAndUserId.isUpVoted()) {
+                    post.setUpVoteCount(post.getUpVoteCount() + 1);
+                    post.setVoteCount(post.getVoteCount() + 1);
+                    voteByPostIdAndUserId.setUpVoted(true);
                 }
-                voteRepository.save(vote);
+
+                voteRepository.save(voteByPostIdAndUserId);
+            } else if (vote.isDownVoted()) {
+                if (voteByPostIdAndUserId.isUpVoted()) {
+                    post.setUpVoteCount(post.getUpVoteCount() - 1);
+                    post.setDownVoteCount(post.getDownVoteCount() + 1);
+                    post.setVoteCount(post.getVoteCount() - 1);
+                    voteByPostIdAndUserId.setDownVoted(false);
+                    voteByPostIdAndUserId.setUpVoted(false);
+                } else if (!voteByPostIdAndUserId.isDownVoted()) {
+                    post.setDownVoteCount(post.getDownVoteCount() + 1);
+                    post.setVoteCount(post.getVoteCount() - 1);
+                    voteByPostIdAndUserId.setDownVoted(true);
+                }
+                voteRepository.save(voteByPostIdAndUserId);
             }
-            postRepository.save(post);
+        } else {
+            vote.setContributed(true);
+            if (vote.isUpVoted()) {
+                post.setUpVoteCount(post.getUpVoteCount() + 1);
+                post.setVoteCount(post.getVoteCount() + 1);
+                vote.setUpVoted(true);
+                vote.setDownVoted(false);
+            } else if (vote.isDownVoted()) {
+                post.setVoteCount(post.getVoteCount() - 1);
+                post.setDownVoteCount(post.getDownVoteCount() + 1);
+                vote.setDownVoted(true);
+                vote.setUpVoted(false);
+            }
+            voteRepository.save(vote);
         }
+        postRepository.save(post);
+    }
 
     @Override
     public Map<Long, Map<Long, Vote>> getVotesByPosts(List<Post> posts) {
         List<Long> postIds = new ArrayList<>();
-        for(Post post: posts){
+        for (Post post : posts) {
             postIds.add(post.getId());
         }
         List<Vote> votes = voteRepository.findVotesByPostId(postIds);
         Map<Long, Map<Long, Vote>> votesPostMap = new HashMap<>();
 
-        for(Vote vote: votes) {
+        for (Vote vote : votes) {
             Map<Long, Vote> votesUserMap = new HashMap<>();
 
             votesUserMap.put(vote.getUserId(), vote);

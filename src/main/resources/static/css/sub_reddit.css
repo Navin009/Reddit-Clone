@@ -24,6 +24,7 @@ body {
 	align-items: center;
 	border: 1px solid #a8a8a8;
 	border-radius: 3px;
+	background-color: #fff;
 }
 
 .new-post > img {
@@ -52,35 +53,15 @@ aside {
 	grid-auto-flow: row;
 }
 
-.subreddit-div li a {
-	display: block;
-	margin: 10px;
-	text-decoration: none;
-}
-
-.subreddit,
-.posts-div,
-subreddits-div,
-.single-post {
-	background: white;
-	margin: 10px;
-	padding: 10px 20px;
-	border-radius: 5px;
-}
-
 .votes-div {
-	padding: 1vh;
+	padding: 1vh 0;
+	text-align: center;
+	background-color: #f7f9fa;
 }
 
-.card {
-	border: none;
-	background: #fff;
-}
-
-.main {
-	background-color: #dae0e6;
-	padding: 30px;
-	margin: 0 20vh;
+.count-vote {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .sorting {
@@ -130,10 +111,37 @@ subreddits-div,
 	background-color: #f0f0f0;
 }
 
-.post-box {
+.btn-vote {
+	outline: none;
+	border: none;
+	background-color: transparent;
+	font-size: x-large;
+}
+
+.posts-box {
 	display: flex;
 	margin: 1vh;
 	margin-bottom: 3vh;
 	border: 1px solid #a8a8a8;
 	min-height: 40vh;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.post-container {
+	width: 100%;
+	background: white;
+	padding: 2vh;
+}
+
+.post-title {
+	font-size: 30px;
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-weight: bold;
+	margin-bottom: 1vh;
+}
+
+.post-content{
+	font-family: 'Courier New', Courier, monospace;
+	white-space: pre-wrap;
 }

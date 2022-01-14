@@ -101,73 +101,56 @@
             </div>
             <!-- Content-->
             <th:block th:each="post : ${posts}">
-                <div class="post-box">
+                <div class="posts-box">
                     <div class="votes-div">
                         <form action="/vote" method="get">
                             <input type="hidden" name="postId" th:value="${post.id}" />
                             <input type="hidden" name="upVote" value="true" />
                             <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
+                            <!-- vote up not fill -->
                             <th:block
                                 th:if="${!userExist or !votes.containsKey(post.id) or !votes.get(post.id).containsKey(user.id) or !votes.get(post.id).get(user.id).upVoted }">
-                                <button type="submit">
+                                <button type="submit" class="btn-vote">
                                     <i class="bi bi-arrow-up-circle"></i>
                                 </button>
                             </th:block>
-                        </form>
-                        <form action="/vote" method="get">
-                            <input type="hidden" name="postId" th:value="${post.id}" />
-                            <input type="hidden" name="upVote" value="false" />
-                            <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
-                            <th:block th:if="${userExist
-                                                                and votes.containsKey(post.id)}
-                                                                and ${votes.get(post.id).containsKey(user.id)}
-                                                                and ${votes.get(post.id).get(user.id).upVoted} ">
-                                <button type="submit">
+                            <!-- vote up fill -->
+                            <th:block
+                                th:if="${userExist and votes.containsKey(post.id)}  and ${votes.get(post.id).containsKey(user.id)}  and ${votes.get(post.id).get(user.id).upVoted} ">
+                                <button type="submit" class="btn-vote">
                                     <i class="bi bi-arrow-up-circle-fill"></i>
                                 </button>
                             </th:block>
                         </form>
-                        <span class="" style="color: rgb(26, 26, 27);">&nbsp&nbsp&nbsp[[${post.voteCount}]]</span>
+                        <span class="count-vote">[[${post.voteCount}]]</span>
                         <form action="/vote" method="get">
                             <input type="hidden" name="postId" th:value="${post.id}" />
                             <input type="hidden" name="downVote" value="true" />
                             <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
-                            <th:block th:if="${!userExist
-                                                                or !votes.containsKey(post.id)}
-                                                                or ${!votes.get(post.id).containsKey(user.id)}
-                                                                or ${!votes.get(post.id).get(user.id).downVoted}">
-                                <button type="submit">
+                            <!-- vote down not fill -->
+                            <th:block
+                                th:if="${!userExist or !votes.containsKey(post.id)} or ${!votes.get(post.id).containsKey(user.id)} or ${!votes.get(post.id).get(user.id).downVoted}">
+                                <button type="submit" class="btn-vote">
                                     <i class="bi bi-arrow-down-circle"></i>
                                 </button>
                             </th:block>
-                        </form>
-                        <form action="/vote" method="get">
-                            <input type="hidden" name="postId" th:value="${post.id}" />
-                            <input type="hidden" name="downVote" value="false" />
-                            <input type="hidden" name="isHomePage" th:value="${subReddit} != null" />
-                            <th:block th:if="${userExist
-                                                                and votes.containsKey(post.id)}
-                                                                and ${votes.get(post.id).containsKey(user.id)}
-                                                                and  ${votes.get(post.id).get(user.id).downVoted}">
-                                <button type="submit">
+                            <!-- vote down fill -->
+                            <th:block
+                                th:if="${userExist and votes.containsKey(post.id)} and ${votes.get(post.id).containsKey(user.id)} and  ${votes.get(post.id).get(user.id).downVoted}">
+                                <button type="submit" class="btn-vote">
                                     <i class="bi bi-arrow-down-circle-fill"></i>
                                 </button>
                             </th:block>
                         </form>
                     </div>
-                    <div class="col-md-11">
-                        <a th:href="'/viewPost/'+${post.id}" style="text-decoration:none; color:black">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6 class="card-title" th:text="${post.title}" th:field="${post.title}">
-                                    </h6>
-                                    <p class="text-muted fst-italic mb-2">
-                                        [[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]
-                                    </p>
-                                    <p class="card-text" th:text="${#strings.abbreviate(post.content,100)}"></p>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="post-container" th:onclick="'redirectPost(' + ${post.id} + ')'">
+                        <div class="post-title" th:text="${post.title}" th:field="${post.title}"></div>
+                        <div class="post-body">
+                            <p class="post-content" th:text="${#strings.abbreviate(post.content,100)}"></p>
+                            <p class="text-muted fst-italic mb-2">
+                                [[${#dates.format(post.createdAt, 'MMM dd, yyyy h:mm a')}]]
+                            </p>
+                        </div>
                     </div>
                 </div>
             </th:block>
@@ -202,9 +185,8 @@
         </aside>
     </div>
     <script>
-        function redirect(url) {
-            debugger;
-            window.location.href = url;
+        function redirectPost(postId) {
+            location.href = "/viewPost/" + postId;
         }
     </script>
 </body>
