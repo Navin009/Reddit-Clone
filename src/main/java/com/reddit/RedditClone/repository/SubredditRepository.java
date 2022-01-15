@@ -23,6 +23,6 @@ public interface SubredditRepository extends JpaRepository<Subreddit, Long> {
 
     Subreddit findByName(String subredditName);
 
-    @Query("select s from Subreddit s, Subscription us where s.id = us.userId")
+    @Query("select s from Subreddit s, Subscription us where s.id = us.subredditId and us.userId = :userId")
     List<Subreddit> findUserSubreddits(Long userId);
 }
