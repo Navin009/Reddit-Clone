@@ -1,10 +1,11 @@
 package com.reddit.RedditClone.service;
 
-import com.reddit.RedditClone.model.Subreddit;
-
 import java.util.List;
 
+import com.reddit.RedditClone.model.Subreddit;
+
 public interface SubredditService {
+
     Subreddit saveSubreddit(Subreddit subreddit);
 
     List<Subreddit> findAllSubreddits();
@@ -32,4 +33,6 @@ public interface SubredditService {
     List<Subreddit> findAllRestrictedSubreddits();
 
     Subreddit findById(Long subredditId);
+
+    List<Subreddit> findUserSubreddits(Long userId);
 }

@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SubredditServiceImpl implements SubredditService{
+public class SubredditServiceImpl implements SubredditService {
 
     @Autowired
     private SubredditRepository subredditRepository;
@@ -106,7 +106,7 @@ public class SubredditServiceImpl implements SubredditService{
 
     @Override
     public boolean isSubredditPrivate(Subreddit subreddit) {
-        if (subreddit.getCommunityType().getName().equals("private")){
+        if (subreddit.getCommunityType().getName().equals("private")) {
             return true;
         }
         return false;
@@ -116,5 +116,10 @@ public class SubredditServiceImpl implements SubredditService{
     public Subreddit getSubredditByName(String subredditName) {
         return subredditRepository.findByName(subredditName);
 
+    }
+
+    @Override
+    public List<Subreddit> findUserSubreddits(Long UserId) {
+        return subredditRepository.findUserSubreddits(UserId);
     }
 }

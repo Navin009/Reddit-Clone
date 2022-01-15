@@ -144,7 +144,7 @@ aside {
 
 .post-content {
 	font-family: "Courier New", Courier, monospace;
-	white-space: pre-wrap;
+	white-space: pre-line;
 }
 
 .post-date {

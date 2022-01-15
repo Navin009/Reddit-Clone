@@ -90,7 +90,7 @@ public class PostController {
 
         List<Post> posts = postService.findAllNewPostsByUssername(user.getUsername());
         // Make it workable
-        List<Subreddit> subreddits = subredditService.searchByUser(user.getId());
+        List<Subreddit> subreddits = subredditService.findUserSubreddits(user.getId());
         List<Comment> comments = commentService.findByUserId(user.getId());
         Map<Long, Map<Long, Vote>> votes = voteService.getVotesByPosts(posts);
 
