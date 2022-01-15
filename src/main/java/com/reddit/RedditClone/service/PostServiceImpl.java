@@ -225,7 +225,7 @@ public class PostServiceImpl implements  PostService{
     }
     @Override
     public List<Post> findAllNewPosts() {
-        return postRepository.findAllOrderByCreatedAtDesc();
+        return postRepository.findAllOrderByVotesDesc();
     }
 
     @Override
